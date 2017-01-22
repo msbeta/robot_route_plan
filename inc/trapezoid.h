@@ -34,6 +34,9 @@ public:
   typedef typename Arrangement_on_surface_2::Edge_const_iterator	
                                                 Edge_const_iterator;
 
+  typedef typename Arrangement_on_surface_2::Point_2 Point_2;
+  typedef typename std::vector<Point_2> Path;
+
   typedef typename Trapezoidal_decomposition::Dag_node Dag_node;
 
   typedef typename Trapezoidal_decomposition::Td_map_item Td_map_item;
@@ -109,6 +112,10 @@ public:
     if (!curr.right_child().is_null()) {
       traverse_dag_recursive(curr.right_child(), depth + 1);
     }
+  }
+
+  void route_plan(const Point_2& st, const Point_2& et, Path& output_path) {
+
   }
 
 protected:

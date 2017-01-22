@@ -15,6 +15,8 @@ typedef CGAL::Arr_segment_traits_2<Kernel>                      Traits_2;
 typedef Traits_2::Point_2                                       Point_2;
 typedef CGAL::Arrangement_2<Traits_2>                           Arrangement_2;
 
+typedef std::vector<Point_2>                                    Path;
+
 template <class Arrangement_>
 void construct_segments_arr(Arrangement_& arr)
 {
@@ -23,7 +25,7 @@ void construct_segments_arr(Arrangement_& arr)
   typedef typename Arrangement_2::X_monotone_curve_2  Segment_2;
   typedef typename Arrangement_2::Halfedge_handle     Halfedge_handle;
 
-  Point_2   b0(0, 0), b1(0, 5), b2(6, 5), b3(6, 0);
+  Point_2   b0(-10, -10), b1(-10, 10), b2(10, 10), b3(10, -10);
   Segment_2 l1(b0, b1), l2(b1, b2), l3(b2, b3), l4(b3, b0);
 
   Point_2    p1(0,3), p2(2,5), p3(4,5), p4(6,3), p5(3,0);
@@ -54,7 +56,14 @@ int main()
   Arrangement_2    arr;
   construct_segments_arr(arr);
 
+  // construct trapezoid
   CGAL::Trapezoid<Arrangement_2> trapezoid_map(arr);
+
+  // provide an start point and end point, then output a path
+  Point_2 start_point(-9, -9);
+  Point_2 end_point(9, 9);
+  Path  route_plan_path;
+  trapezoid_map.route_plan(start_point, end_point, route_plan_path);
 
   trapezoid_map.print_dag();
   return 0;
